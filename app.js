@@ -22,6 +22,8 @@ function Human(species, weight, height, diet, image) {
         
 // Create Dino Objects
 
+const getRandomFact = function(array) {
+    return (array[Math.floor(Math.random() * array.length)])}
 
 const createDinoGrid = function() {
     (async function getData () {
@@ -39,8 +41,6 @@ const createDinoGrid = function() {
         dinosaur.when,
         dinosaur.fact,
         dinosaur.image));
-    console.log(dinosaur)
-   
      
     // Create Human Object
     const humanFacts = new Human();
@@ -54,31 +54,56 @@ const createDinoGrid = function() {
             humanFacts.weight = document.getElementById('weight').value
             humanFacts.diet = document.getElementById('diet').value
             humanFacts.image = "images/human.png"
+            humanFacts.fact = ""
         }
     }(humanFacts)
-    console.log(humanFacts)
+
+    dinosaur.splice(4, 0, humanFacts);
+    
+    // Create Tiles
+    const createTileContructor = function(objectElement) {
+        const gridCreate = document.createElement('div');
+        const gridTitle = document.createElement('h3');
+        const gridImage = document.createElement('img');
+        const gridFact = document.createElement('p');
+    
+        gridCreate.className = 'grid-item';
+        grid.appendChild(gridCreate);
+        gridCreate.appendChild(gridTitle);
+        gridCreate.appendChild(gridImage);
+        gridCreate.appendChild(gridFact);
+    
+        gridTitle.innerHTML = objectElement.species;
+        gridImage.setAttribute('src', objectElement.image);  
+
+        // Choose Random Fact
+        if(objectElement.fact === ''){
+            gridFact.innerHTML = '';
+        }else{
+            
+            gridFact.innerHTML = getRandomFact(objectElement.fact);
+        }
+    
+    }
     
     // Create Dino Compare Method 1
     // NOTE: Weight in JSON file is in lbs, height in inches. 
     const compareWeight = function(dinoWeight) {
         if(humanFacts.weight > dinoWeight){
-            console.log("Lighter")
             return "This dino is lighter than the human"
         }
         else {
-            console.log("heavier")
             return "This dino is heavier than the human."
         }
     }
+
     // Create Dino Compare Method 2
     // NOTE: Weight in JSON file is in lbs, height in inches.
     const compareHeight = function(dinoHeight) {
         if(humanFacts.height > dinoHeight){
-            console.log("Higher")
             return "This dino is bigger than the human"
         }
         else {
-            console.log("Smaller")
             return "This dino is smaller than the human."
         }
     }
@@ -87,28 +112,29 @@ const createDinoGrid = function() {
     // NOTE: Weight in JSON file is in lbs, height in inches.
     const compareDiet = function(dinodiet) {
         if(humanFacts.diet.toLowerCase() == dinodiet.toLowerCase()){
-            console.log("Same Diet")
             return "The Human and the Dino have the same diet"
         }
         else {
-            console.log(`The Human is ${humanFacts.diet} and the Dino is ${dinodiet}`)
             return `The Human is ${humanFacts.diet} and the Dino is ${dinodiet}`;
         }
     }
 
+    // get Elements for Grid in HTML
+    const grid = document.getElementById('grid');
+    
     // Generate Tiles for each Dino in Array
-  
-        // Add tiles to DOM
-    dinosaur.forEach(dinoElement => {
-        console.log(dinoElement)
-        dinoElement.fact.push(compareWeight(dinoElement.weight))
-        dinoElement.fact.push(compareHeight(dinoElement.height))
-        dinoElement.fact.push(compareDiet(dinoElement.diet))
-        console.log("Human Height: " + humanFacts.height)
-        console.log("Dino Height: " + dinoElement.height)
-      
+    // Add tiles to DOM   
+    dinosaur.forEach(dinoElement => {  
+        if(dinoElement.species != "Pigeon" && dinoElement.fact != ''){
+            dinoElement.fact.push(compareWeight(dinoElement.weight))
+            dinoElement.fact.push(compareHeight(dinoElement.height))
+            dinoElement.fact.push(compareDiet(dinoElement.diet))
+        }
+        createTileContructor(dinoElement)
     });
+
 }  )()}
+
 // Remove form from screen
 // add css class hide to hide the form
 function hideForm () {
