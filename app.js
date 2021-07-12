@@ -20,11 +20,12 @@ function Human(species, weight, height, diet, image) {
     this.image = image   
 }
         
-// Create Dino Objects
+// getRandom for dino fact
 const getRandomFact = function(array) {
     return (array[Math.floor(Math.random() * array.length)])
 }
 
+// create the grid
 const createDinoGrid = function() {
     (async function getData () {
         const dino = await fetch('dino.json')
@@ -86,7 +87,7 @@ const createDinoGrid = function() {
     }
     
     // Create Dino Compare Method 1
-    // NOTE: Weight in JSON file is in lbs, height in inches. 
+    // compares the weight of the human and the dino
     const compareWeight = function(dinoWeight) {
         if(humanFacts.weight > dinoWeight){
             return 'This dino is lighter than the human'
@@ -97,7 +98,7 @@ const createDinoGrid = function() {
     }
 
     // Create Dino Compare Method 2
-    // NOTE: Weight in JSON file is in lbs, height in inches.
+    // compares the height of the human and the dino
     const compareHeight = function(dinoHeight) {
         if(humanFacts.height > dinoHeight){
             return 'This dino is bigger than the human'
@@ -108,7 +109,7 @@ const createDinoGrid = function() {
     }
     
     // Create Dino Compare Method 3
-    // NOTE: Weight in JSON file is in lbs, height in inches.
+    // compares the diet of the human and the dino
     const compareDiet = function(dinodiet) {
         if(humanFacts.diet.toLowerCase() == dinodiet.toLowerCase()){
             return 'The Human and the Dino have the same diet'
@@ -121,8 +122,7 @@ const createDinoGrid = function() {
     // get Elements for Grid in HTML
     const grid = document.getElementById('grid');
     
-    // Generate Tiles for each Dino in Array
-    // Add tiles to DOM   
+    // Add comarison facts to the dinos and creates the tiles (not for the pigeon and human)
     dinosaur.forEach(dinoElement => {  
         if(dinoElement.species != 'Pigeon' && dinoElement.fact != ''){
             dinoElement.fact.push(compareWeight(dinoElement.weight))
