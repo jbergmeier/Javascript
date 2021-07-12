@@ -1,5 +1,5 @@
 
-    // Create Dino Constructor
+// Create Dino Constructor
 function Dino(species, weight, height, diet, where, when, fact, image) {
     this.species = species
     this.weight = weight
@@ -17,22 +17,22 @@ function Human(species, weight, height, diet, image) {
     this.weight = weight
     this.height = height
     this.diet = diet
-    this.image = image
+    this.image = image   
 }
         
 // Create Dino Objects
-
 const getRandomFact = function(array) {
-    return (array[Math.floor(Math.random() * array.length)])}
+    return (array[Math.floor(Math.random() * array.length)])
+}
 
 const createDinoGrid = function() {
     (async function getData () {
-        var dino = await fetch("dino.json")
+        const dino = await fetch('dino.json')
         .then(result => result.json())
         .then(result => result.Dinos);
     
     // Create Dino Objects
-    var dinosaur = dino.map(dinosaur => new Dino(
+    const dinosaur = dino.map(dinosaur => new Dino(
         dinosaur.species,
         dinosaur.weight,
         dinosaur.height,
@@ -46,17 +46,16 @@ const createDinoGrid = function() {
     const humanFacts = new Human();
 
     // Use IIFE to get human data from form
-    const humanData = function(humanFacts) {
-        {
-            // Todo: Catch Event nothing is entered!
-            humanFacts.height = parseInt(document.getElementById('feet').value * 12) + parseInt(document.getElementById('inches').value)
-            humanFacts.species = document.getElementById('name').value
-            humanFacts.weight = document.getElementById('weight').value
-            humanFacts.diet = document.getElementById('diet').value
-            humanFacts.image = "images/human.png"
-            humanFacts.fact = ""
-        }
-    }(humanFacts)
+    (function(humanFacts) {
+    {
+        humanFacts.height = parseInt(document.getElementById('feet').value * 12) + parseInt(document.getElementById('inches').value)
+        humanFacts.species = document.getElementById('name').value
+        humanFacts.weight = document.getElementById('weight').value
+        humanFacts.diet = document.getElementById('diet').value
+        humanFacts.image = 'images/human.png'
+        humanFacts.fact = ''
+    }
+    })(humanFacts)
 
     dinosaur.splice(4, 0, humanFacts);
     
@@ -77,7 +76,7 @@ const createDinoGrid = function() {
         gridImage.setAttribute('src', objectElement.image);  
 
         // Choose Random Fact
-        if(objectElement.fact === ''){
+        if(objectElement.fact === '') {
             gridFact.innerHTML = '';
         }else{
             
@@ -90,10 +89,10 @@ const createDinoGrid = function() {
     // NOTE: Weight in JSON file is in lbs, height in inches. 
     const compareWeight = function(dinoWeight) {
         if(humanFacts.weight > dinoWeight){
-            return "This dino is lighter than the human"
+            return 'This dino is lighter than the human'
         }
         else {
-            return "This dino is heavier than the human."
+            return 'This dino is heavier than the human.'
         }
     }
 
@@ -101,10 +100,10 @@ const createDinoGrid = function() {
     // NOTE: Weight in JSON file is in lbs, height in inches.
     const compareHeight = function(dinoHeight) {
         if(humanFacts.height > dinoHeight){
-            return "This dino is bigger than the human"
+            return 'This dino is bigger than the human'
         }
         else {
-            return "This dino is smaller than the human."
+            return 'This dino is smaller than the human.'
         }
     }
     
@@ -112,7 +111,7 @@ const createDinoGrid = function() {
     // NOTE: Weight in JSON file is in lbs, height in inches.
     const compareDiet = function(dinodiet) {
         if(humanFacts.diet.toLowerCase() == dinodiet.toLowerCase()){
-            return "The Human and the Dino have the same diet"
+            return 'The Human and the Dino have the same diet'
         }
         else {
             return `The Human is ${humanFacts.diet} and the Dino is ${dinodiet}`;
@@ -125,7 +124,7 @@ const createDinoGrid = function() {
     // Generate Tiles for each Dino in Array
     // Add tiles to DOM   
     dinosaur.forEach(dinoElement => {  
-        if(dinoElement.species != "Pigeon" && dinoElement.fact != ''){
+        if(dinoElement.species != 'Pigeon' && dinoElement.fact != ''){
             dinoElement.fact.push(compareWeight(dinoElement.weight))
             dinoElement.fact.push(compareHeight(dinoElement.height))
             dinoElement.fact.push(compareDiet(dinoElement.diet))
@@ -138,15 +137,14 @@ const createDinoGrid = function() {
 // Remove form from screen
 // add css class hide to hide the form
 function hideForm () {
-    hideForm = document.getElementById("dino-compare")
-    hideForm.classList.add("hide");
+    hideForm = document.getElementById('dino-compare')
+    hideForm.classList.add('hide');
 }
 
 // On button click, prepare and display infographic
 // Eventlistener for the Buttons
-const button = document.getElementById("btn")
-    button.addEventListener('click', (function () {
-        createDinoGrid();
-        hideForm();
-        
-    }))
+const button = document.getElementById('btn')
+button.addEventListener('click', (function () {
+    createDinoGrid();
+    hideForm();
+}))
